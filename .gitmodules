@@ -1,0 +1,6 @@
+[submodule "UniversalUI"]
+	path = UniversalUI
+	url = https://github.com/bharatph/UniversalUI
+[submodule "clog"]
+	path = clog
+	url = https://github.com/bharatph/clog
