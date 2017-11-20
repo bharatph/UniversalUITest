@@ -1,38 +1,54 @@
 #include<iostream>
+#include<vector>
+#include<map>
 #include <UniversalUI.hpp>
 #ifdef FLTK_UI
 #include<FLTKUI.hpp>
 #elif CHARACTER_UI
 #include<CharacterUI.hpp>
 #endif
+#include <Node/Node.hpp>
 
 using namespace std;
 using namespace uui;
-void func_test(UI *ui, void *obj)
+
+
+typedef struct {
+	std::string hostname;
+	int port;
+} host_data;
+
+int test_connection(uui::UI *ui, void *obj)
 {
-	ui->error("testing dialog");
+	std::string hostname = ((host_data *)obj)->hostname;
+	int port = ((host_data *)obj)->port;
+	node::Node *n = new node::Node();
+	if(n->connect(hostname.c_str(), port) != 0)
+	{
+		ui->error("Cannot connect to the service");
+		return 0;
+	}
+	log_inf("TEST", "All are working fine");
+	n->writeln("OkokOkokayyOkay...");
+	ui->alert( n->readln() );
+	return 0;
 }
 
-void func_help(UI *ui, void *obj)
+void *make_args(std::string s, int i)
 {
-	ui->alert("you are about to be helped");
+	return nullptr;
 }
 
-void func_connect(UI *ui, void *obj)
-{
-	char *port = (char *)obj;	
-	ui->error("cannot connect to the host");
-}
 
 int main(int argc, char *argv[]){
 #ifdef FLTK_UI
-	UI *ui = new FLTKUI();
+	//UI *ui = new FLTKUI();
 #else
-	UI *ui = new CharacterUI();
+	//UI *ui = new CharacterUI();
 #endif
-	ui->set("test", func_test);
-	ui->set("help", func_help);
-	ui->set("connect", func_connect);
-
-	ui->run("connect");
+	FLTKUI *ui = new FLTKUI();
+	ui->error("Why?");
+	ui->set("connect", new vector<std::string>{"Hostname", "Port"}, test_connection);
+	ui->run("connect", new host_data {"localhost", 22});
+	return 0;
 }

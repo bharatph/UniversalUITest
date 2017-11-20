@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 project(app)
 
-set (CMAKE_CXX_STANDARD 11)
-
 option(FLTK_UI "Enable FLTK Graphical UI" ON)
 option(CHARACTER_UI "Enable Command Line Interface" OFF)
 
@@ -14,6 +12,7 @@ endif()
 
 add_executable(app test.cpp)
 target_link_libraries(app clog)
+target_link_libraries(app Node)
 target_link_libraries(app UniversalUI)
 if(CHARACTER_UI)
 	target_link_libraries(app CharacterUI)
