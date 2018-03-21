@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-set(CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 11)
 add_subdirectory(clog ${CMAKE_SOURCE_DIR}/build/clog)
 
 add_subdirectory(Node ${CMAKE_SOURCE_DIR}/build/Node)
